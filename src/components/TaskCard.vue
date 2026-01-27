@@ -8,20 +8,17 @@ const router = useRouter()
 <template>
   <div v-tooltip="'created At :' + task.createdAt" class="flex items-center gap-4">
     <!-- Custom Checkbox -->
-    <template v-if="task.completed">
-      <button
-        @click="$emit('toggle')"
-        class="flex-shrink-0 w-6 h-6 rounded-md border-2 bg-indigo-600 border-indigo-600 flex items-center justify-center transition-all"
-      >
-        <i class="pi pi-check text-white text-sm" aria-hidden="true"></i>
-      </button>
-    </template>
-    <template v-else>
-      <button
-        @click="$emit('toggle', task.id)"
-        class="flex-shrink-0 w-6 h-6 rounded-md border-2 border-gray-300 hover:border-indigo-600 flex items-center justify-center transition-all"
-      ></button>
-    </template>
+    <button
+      @click="$emit('toggle', task.id)"
+      class="flex-shrink-0 w-6 h-6 rounded-md border-2 flex items-center justify-center transition-all"
+      :class="
+        task.completed
+          ? 'bg-indigo-600 border-indigo-600'
+          : 'border-gray-300 hover:border-indigo-600'
+      "
+    >
+      <i v-if="task.completed" class="pi pi-check text-white text-sm"></i>
+    </button>
 
     <!-- Task Text -->
     <span

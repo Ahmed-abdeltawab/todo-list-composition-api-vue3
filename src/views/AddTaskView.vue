@@ -19,6 +19,7 @@ const handleSubmit = () => {
     id: Date.now(),
     completed: false,
     text: descInput.value.trim(),
+    createdAt: new Date().toISOString(),
   })
 
   router.push('/')
