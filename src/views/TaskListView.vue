@@ -1,8 +1,10 @@
 <script setup>
-import TaskCard from "@/components/TaskCard.vue";
-import useTodos from "@/composables/useTodos";
+import TaskCard from '@/components/TaskCard.vue'
+import { useTodoStore } from '@/stores/todoStore'
+import { storeToRefs } from 'pinia'
 
-const { todos, deleteTask, toggleComplete } = useTodos();
+const store = useTodoStore()
+const { todos, completedCount } = storeToRefs(store)
 </script>
 
 <template>
@@ -12,6 +14,9 @@ const { todos, deleteTask, toggleComplete } = useTodos();
       <h1 class="text-3xl font-bold text-gray-800 mb-2">My Tasks</h1>
       <p class="text-gray-600">
         Total Tasks: <span class="font-semibold text-indigo-600">{{ todos.length }}</span>
+      </p>
+      <p class="text-gray-600">
+        Completed Tasks: <span class="font-semibold text-indigo-600">{{ completedCount }}</span>
       </p>
     </div>
 
@@ -29,11 +34,7 @@ const { todos, deleteTask, toggleComplete } = useTodos();
         :key="task.id ?? index"
         class="bg-white rounded-xl shadow-sm border border-gray-200 p-4 hover:shadow-md transition-shadow"
       >
-        <TaskCard
-          @delete="deleteTask"
-          :task="task"
-          @toggle="toggleComplete"
-        />
+        <TaskCard :task="task" />
       </div>
     </div>
   </div>

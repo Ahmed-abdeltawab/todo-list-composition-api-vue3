@@ -1,15 +1,17 @@
 <script setup>
+import { useTodoStore } from '@/stores/todoStore'
 import { useRouter } from 'vue-router'
 
 const { task } = defineProps(['task'])
-defineEmits(['toggle', 'delete'])
+const store = useTodoStore()
+const { toggleComplete, deleteTask } = store
 const router = useRouter()
 </script>
 <template>
   <div v-tooltip="'created At :' + task.createdAt" class="flex items-center gap-4">
     <!-- Custom Checkbox -->
     <button
-      @click="$emit('toggle', task.id)"
+      @click="toggleComplete(task.id)"
       class="flex-shrink-0 w-6 h-6 rounded-md border-2 flex items-center justify-center transition-all"
       :class="
         task.completed
@@ -36,7 +38,7 @@ const router = useRouter()
     </button>
     <button
       class="flex-shrink-0 text-gray-400 hover:text-red-600 transition-colors p-2 rounded-lg hover:bg-red-50"
-      @click="$emit('delete', task.id)"
+      @click="deleteTask(task.id)"
       aria-label="Delete task"
     >
       <i class="pi pi-trash text-xl" aria-hidden="true"></i>

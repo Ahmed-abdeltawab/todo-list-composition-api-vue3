@@ -1,16 +1,15 @@
 import { computed, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import useTodos from './useTodos'
+import { useTodoStore } from '@/stores/todoStore'
 
 export default function useTaskDetails() {
-  const { todos, toggleComplete, deleteTask } = useTodos()
+  const store = useTodoStore()
   const route = useRoute()
   const router = useRouter()
 
   // Computed properties
   const taskId = computed(() => Number(route.params.id))
-  const task = computed(() => todos.value.find((t) => t.id === taskId.value))
-
+  const task = computed(() => store.getTaskById(taskId.value))
   // Edit state
   const isEditing = ref(false)
   const editText = ref('')
@@ -25,7 +24,7 @@ export default function useTaskDetails() {
 
   const saveEdit = () => {
     if (task.value && editText.value.trim()) {
-      task.value.text = editText.value.trim()
+      store.updateTask(taskId.value, editText.value)
       isEditing.value = false
     }
   }
@@ -38,14 +37,14 @@ export default function useTaskDetails() {
   // Task operations
   const handleDelete = () => {
     if (task.value && confirm('Are you sure you want to delete this task?')) {
-      deleteTask(task.value.id)
+      store.deleteTask(task.value.id)
       router.push('/')
     }
   }
 
   const handleToggle = () => {
     if (task.value) {
-      toggleComplete(task.value.id)
+      store.toggleComplete(task.value.id)
     }
   }
 

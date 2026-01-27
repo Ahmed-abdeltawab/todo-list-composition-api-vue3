@@ -1,9 +1,10 @@
 <script setup>
-import useTodos from '@/composables/useTodos'
+import { useTodoStore } from '@/stores/todoStore'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 
-const { addTask } = useTodos()
+const store = useTodoStore()
+console.log('store', store)
 const vFocus = {
   mounted: (el) => el.focus(),
 }
@@ -15,7 +16,7 @@ const handleSubmit = () => {
     return
   }
 
-  addTask({
+  store.addTask({
     id: Date.now(),
     completed: false,
     text: descInput.value.trim(),
@@ -52,7 +53,6 @@ const handleSubmit = () => {
             <!-- Save Button - Normal State -->
             <button
               type="submit"
-              
               class="flex-1 bg-indigo-600 text-white py-3 px-6 rounded-xl font-medium hover:bg-indigo-700 transition-all transform hover:scale-105 active:scale-95"
             >
               Save Task
