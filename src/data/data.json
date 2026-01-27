@@ -1,0 +1,53 @@
+{
+    "todos": [
+        {
+            "id": 1,
+            "todo": "Do something nice for someone you care about",
+            "completed": false,
+            "userId": 152,
+            "createdAt": "2024-06-15T10:00:00Z"
+        },
+        {
+            "id": 2,
+            "todo": "Memorize a poem",
+            "completed": true,
+            "userId": 13,
+            "createdAt": "2023-08-15T10:00:00Z"
+        },
+        {
+            "id": 4,
+            "todo": "Watch a documentary",
+            "completed": false,
+            "userId": 84,
+            "createdAt": "2023-06-15T10:00:00Z"
+        },
+        {
+            "id": 5,
+            "todo": "Invest in cryptocurrency",
+            "completed": false,
+            "userId": 163,
+            "createdAt": "2024-01-10T14:30:00Z"
+        },
+        {
+            "id": 6,
+            "todo": "Contribute code or a monetary donation to an open-source software project",
+            "completed": false,
+            "userId": 69,
+            "createdAt": "2023-12-20T09:15:00Z"
+        },
+        {
+            "id": 7,
+            "todo": "Solve a Rubik's cube",
+            "completed": true,
+            "userId": 76,
+            "createdAt": "2025-12-20T09:15:00Z"
+        },
+        {
+            "id": 8,
+            "todo": "Bake pastries for yourself and neighbor",
+            "completed": true,
+            "userId": 198,
+            "createdAt": "2023-12-20T09:15:00Z"
+        }
+    ]
+}
