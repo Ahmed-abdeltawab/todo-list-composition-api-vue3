@@ -55,18 +55,27 @@ export const useTodoStore = defineStore('todo', () => {
 
   const toggleComplete = async (id) => {
     const task = todos.value.find((t) => t.id === id)
-    if (task) {
-      try {
-        const updatedTodo = await api.patchTodo(id, { completed: !task.completed })
-        task.completed = updatedTodo.completed
-        if (task.completed) {
-          const userStore = useUserStore()
-          userStore.completeTaskBonus()
-        }
-      } catch (error) {
-        console.error('Failed to toggle task:', error)
-        throw error
+    if (!task) return
+
+    const oldCompleted = task.completed
+
+    task.completed = !task.completed
+
+    if (task.completed) {
+      const userStore = useUserStore()
+      userStore.completeTaskBonus()
+    }
+
+    try {
+      await api.patchTodo(id, { completed: task.completed })
+    } catch (error) {
+      task.completed = oldCompleted
+      if (oldCompleted === false) {
+        const userStore = useUserStore()
+        userStore.xp -= 10
       }
+      console.error('Failed to toggle task:', error)
+      throw error
     }
   }
 
