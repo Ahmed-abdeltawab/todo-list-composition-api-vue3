@@ -1,22 +1,14 @@
 <script setup>
-const props = defineProps({
-  modelValue: {
-    type: String,
-    required: true,
-  },
+const filterStatus = defineModel({ type: String, required: true });
+
+defineProps({
   taskCount: {
     type: Number,
     default: 0,
   },
-})
+});
 
-const emit = defineEmits(['update:modelValue'])
-
-const statusFilters = ['all', 'completed', 'pending']
-
-const updateFilter = (status) => {
-  emit('update:modelValue', status)
-}
+const statusFilters = ["all", "completed", "pending"];
 </script>
 
 <template>
@@ -32,10 +24,10 @@ const updateFilter = (status) => {
       <button
         v-for="status in statusFilters"
         :key="status"
-        @click="updateFilter(status)"
+        @click="filterStatus = status"
         :class="[
           'px-6 py-2 text-xs font-bold rounded-lg transition-all duration-300 capitalize tracking-wide',
-          modelValue === status
+          filterStatus === status
             ? 'bg-white text-indigo-600 shadow-sm transform scale-105'
             : 'text-gray-500 hover:text-gray-900 hover:bg-white/40',
         ]"

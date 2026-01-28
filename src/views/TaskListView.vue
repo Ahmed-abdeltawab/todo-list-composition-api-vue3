@@ -1,22 +1,22 @@
 <script setup>
-import TaskCard from '@/components/TaskCard.vue'
-import UserWelcome from '@/components/UserWelcome.vue'
-import StatsCard from '@/components/StatsCard.vue'
-import TaskFilter from '@/components/TaskFilter.vue'
-import EmptyState from '@/components/EmptyState.vue'
-import { useTodoStore } from '@/stores/todoStore'
-import { useUserStore } from '@/stores/userStore'
-import { storeToRefs } from 'pinia'
-import { onMounted } from 'vue'
+import TaskCard from "@/components/TaskCard.vue";
+import UserWelcome from "@/components/UserWelcome.vue";
+import StatsCard from "@/components/StatsCard.vue";
+import TaskFilter from "@/components/TaskFilter.vue";
+import EmptyState from "@/components/EmptyState.vue";
+import { useTodoStore } from "@/stores/todoStore";
+import { useUserStore } from "@/stores/userStore";
+import { storeToRefs } from "pinia";
+import { onMounted } from "vue";
 
-const store = useTodoStore()
-const userStore = useUserStore()
-const { completedCount, filteredTodos, filterStatus } = storeToRefs(store)
-const { name, userRank, xp } = storeToRefs(userStore)
+const store = useTodoStore();
+const userStore = useUserStore();
+const { completedCount, filteredTodos, filterStatus } = storeToRefs(store);
+const { name, userRank, xp } = storeToRefs(userStore);
 
 onMounted(() => {
-  store.getTodos()
-})
+  store.getTodos();
+});
 </script>
 
 <template>
