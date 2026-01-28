@@ -2,9 +2,13 @@
 import TaskCard from '@/components/TaskCard.vue'
 import { useTodoStore } from '@/stores/todoStore'
 import { storeToRefs } from 'pinia'
+import { onMounted } from 'vue'
 
 const store = useTodoStore()
 const { todos, completedCount } = storeToRefs(store)
+onMounted(() => {
+  store.getTodos()
+})
 </script>
 
 <template>
