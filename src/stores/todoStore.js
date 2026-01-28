@@ -1,17 +1,28 @@
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
 import api from '@/services/api'
+import { useUserStore } from './userStore'
 
 export const useTodoStore = defineStore('todo', () => {
   // State
   const todos = ref([])
+  const filterStatus = ref('all') // all , completed , pending
 
   // Getters
   const completedCount = computed(() => todos.value.filter((t) => t.completed === true).length)
   const getTaskById = computed(() => {
     return (todoId) => todos.value.find((todo) => todo.id === todoId)
   })
-
+  const filteredTodos = computed(() => {
+    let result = todos.value
+    if (filterStatus.value === 'completed') {
+      result = result.filter((t) => t.completed)
+    } else if (filterStatus.value === 'pending') {
+      result = result.filter((t) => !t.completed)
+    }
+    console.log(result)
+    return result
+  })
   // Actions
   const getTodos = async () => {
     try {
@@ -48,6 +59,10 @@ export const useTodoStore = defineStore('todo', () => {
       try {
         const updatedTodo = await api.patchTodo(id, { completed: !task.completed })
         task.completed = updatedTodo.completed
+        if (task.completed) {
+          const userStore = useUserStore()
+          userStore.completeTaskBonus()
+        }
       } catch (error) {
         console.error('Failed to toggle task:', error)
         throw error
@@ -68,13 +83,15 @@ export const useTodoStore = defineStore('todo', () => {
     }
   }
   return {
-    getTodos,
     todos,
+    filterStatus,
     completedCount,
+    filteredTodos,
+    getTaskById,
+    getTodos,
     addTask,
     deleteTask,
     toggleComplete,
-    getTaskById,
     updateTask,
   }
 })
